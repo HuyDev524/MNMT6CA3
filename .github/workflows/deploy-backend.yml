@@ -2,7 +2,7 @@ name: Deploy Backend (BE Only)
 on:
   push:
     branches: ['main']
-    paths: ['be/**'] # Chỉ chạy khi folder BE thay đổi
+    paths: ['be/**']
   workflow_dispatch:
 
 jobs:
@@ -20,15 +20,16 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         
-        # QUAN TRỌNG: Lấy file TỪ folder be
+        # Lấy file TỪ folder be
         local-dir: be/
         
-        # Đẩy VÀO folder htdocs (nằm chung với FE)
+        # Đẩy VÀO folder htdocs
         server-dir: /htdocs/
-
-        delete: "false"
         
-        # Không bao giờ upload file .git
+        # --- QUAN TRỌNG NHẤT: DÒNG NÀY CẤM XÓA FILE CỦA FRONTEND ---
+        delete: "false"
+        # -----------------------------------------------------------
+        
         exclude: |
           **/.git*
           **/.git/**
