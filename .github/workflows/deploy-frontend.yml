@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'index.php' # Chỉ chạy khi file index.php bị thay đổi
+  workflow_dispatch:
 
 jobs:
   deploy-fe:
@@ -21,7 +20,7 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: /htdocs/
-        # Chỉ upload file index.php, bỏ qua backend và các file rác
+        # Chỉ upload index.php
         exclude: |
           backend.php
           **/.git*
