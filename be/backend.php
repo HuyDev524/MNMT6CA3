@@ -5,7 +5,7 @@ $BASE_URL = "http://thanhhuyle.infinityfree.me/index.php";
 if (!isset($_SESSION['students'])) {
     $_SESSION['students'] = [
         ['id' => 1, 'name' => 'Nguyễn Văn A', 'year' => 2002, 'major' => 'CNTT'],
-        ['id' => 2, 'name' => 'Trần Thị C', 'year' => 2003, 'major' => 'Kinh Tế'],
+        ['id' => 2, 'name' => 'Trần Thị D', 'year' => 2003, 'major' => 'Kinh Tế'],
     ];
 }
 
