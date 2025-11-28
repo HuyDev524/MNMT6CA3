@@ -20,15 +20,14 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         
-        # Lấy file TỪ folder be
         local-dir: be/
-        
-        # Đẩy VÀO folder htdocs
         server-dir: /htdocs/
         
-        # --- QUAN TRỌNG NHẤT: DÒNG NÀY CẤM XÓA FILE FRONTEND ---
+        # --- QUAN TRỌNG: Đặt tên sổ riêng cho BE ---
+        state-name: .be-sync.json
+        # ------------------------------------------
+        
         delete: "false"
-        # -----------------------------------------------------------
         
         exclude: |
           **/.git*
