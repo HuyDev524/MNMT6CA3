@@ -1,0 +1,29 @@
+name: Deploy Frontend (FE)
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.php' # Chỉ chạy khi file index.php bị thay đổi
+
+jobs:
+  deploy-fe:
+    name: 🚀 Deploy Frontend
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync Frontend to InfinityFree
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /htdocs/
+        # Chỉ upload file index.php, bỏ qua backend và các file rác
+        exclude: |
+          backend.php
+          **/.git*
+          **/.github*
+          README.md

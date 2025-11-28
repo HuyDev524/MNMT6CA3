@@ -1,0 +1,86 @@
+<?php
+session_start();
+
+// --- 1. KHỞI TẠO DỮ LIỆU (MOCK DATA) ---
+if (!isset($_SESSION['students'])) {
+    $_SESSION['students'] = [
+        ['id' => 1, 'name' => 'Nguyễn Văn A', 'year' => 2002, 'major' => 'CNTT'],
+        ['id' => 2, 'name' => 'Trần Thị B', 'year' => 2003, 'major' => 'Kinh Tế'],
+    ];
+}
+
+// Hàm lấy ID tự động tăng
+function getNewId($list) {
+    $maxId = 0;
+    foreach ($list as $sv) {
+        if ($sv['id'] > $maxId) $maxId = $sv['id'];
+    }
+    return $maxId + 1;
+}
+
+// Biến để chứa thông tin sinh viên khi bấm Sửa (để Frontend dùng)
+$editStudent = null;
+
+// --- 2. XỬ LÝ KHI NGƯỜI DÙNG SUBMIT FORM (POST) ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save'])) {
+    $id = $_POST['id'] ?? '';
+    $name = $_POST['name'];
+    $year = $_POST['year'];
+    $major = $_POST['major'];
+
+    if ($id) {
+        // ==> LOGIC SỬA
+        foreach ($_SESSION['students'] as &$sv) {
+            if ($sv['id'] == $id) {
+                $sv['name'] = $name;
+                $sv['year'] = $year;
+                $sv['major'] = $major;
+                break;
+            }
+        }
+    } else {
+        // ==> LOGIC THÊM
+        $newStudent = [
+            'id' => getNewId($_SESSION['students']),
+            'name' => $name,
+            'year' => $year,
+            'major' => $major
+        ];
+        $_SESSION['students'][] = $newStudent;
+    }
+    
+    // Xử lý xong thì load lại trang chủ để tránh gửi lại form khi F5
+    header("Location: index.php");
+    exit();
+}
+
+// --- 3. XỬ LÝ KHI NGƯỜI DÙNG BẤM LINK (GET) ---
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+    $id = $_GET['id'] ?? 0;
+
+    // ==> LOGIC XÓA
+    if ($action == 'delete') {
+        foreach ($_SESSION['students'] as $key => $sv) {
+            if ($sv['id'] == $id) {
+                unset($_SESSION['students'][$key]);
+                break;
+            }
+        }
+        // Sắp xếp lại index mảng
+        $_SESSION['students'] = array_values($_SESSION['students']);
+        header("Location: index.php");
+        exit();
+    }
+
+    // ==> LOGIC LẤY DỮ LIỆU ĐỂ SỬA
+    if ($action == 'edit') {
+        foreach ($_SESSION['students'] as $sv) {
+            if ($sv['id'] == $id) {
+                $editStudent = $sv; // Gán vào biến này để file index.php hiển thị
+                break;
+            }
+        }
+    }
+}
+?>

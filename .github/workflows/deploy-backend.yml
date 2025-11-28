@@ -1,0 +1,29 @@
+name: Deploy Backend (BE)
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend.php' # Chỉ chạy khi file backend.php bị thay đổi
+
+jobs:
+  deploy-be:
+    name: ⚙️ Deploy Backend
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync Backend to InfinityFree
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /htdocs/
+        # Chỉ upload file backend.php, bỏ qua index và các file rác
+        exclude: |
+          index.php
+          **/.git*
+          **/.github*
+          README.md
