@@ -73,14 +73,34 @@ if (isset($_GET['action'])) {
         exit();
     }
 
-    // ==> LOGIC LẤY DỮ LIỆU ĐỂ SỬA
+  // ==> LOGIC LẤY DỮ LIỆU ĐỂ SỬA
     if ($action == 'edit') {
         foreach ($_SESSION['students'] as $sv) {
             if ($sv['id'] == $id) {
-                $editStudent = $sv; // Gán vào biến này để file index.php hiển thị
+                $editStudent = $sv;
                 break;
             }
         }
     }
+}
+
+// --- 4. XỬ LÝ TÌM KIẾM ---
+// Mặc định danh sách hiển thị là toàn bộ sinh viên
+$studentsToDisplay = $_SESSION['students'];
+$keyword = '';
+
+if (isset($_GET['keyword']) && !empty($_GET['keyword'])) {
+    $keyword = $_GET['keyword'];
+    $filteredList = [];
+    
+    foreach ($_SESSION['students'] as $sv) {
+        // Dùng stripos để tìm kiếm không phân biệt hoa thường
+        // Nếu tên sinh viên chứa từ khóa
+        if (stripos($sv['name'], $keyword) !== false) {
+            $filteredList[] = $sv;
+        }
+    }
+    // Gán danh sách hiển thị bằng danh sách đã lọc
+    $studentsToDisplay = $filteredList;
 }
 ?>

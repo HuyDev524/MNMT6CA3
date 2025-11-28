@@ -1,6 +1,11 @@
 <?php 
 // Gọi logic backend vào đây
 require_once 'backend.php'; 
+
+// Đảm bảo biến $keyword được khởi tạo nếu chưa có (tránh lỗi undefined variable)
+$keyword = $keyword ?? '';
+// Đảm bảo biến $studentsToDisplay được khởi tạo (nếu backend chưa xử lý thì lấy mặc định)
+$studentsToDisplay = $studentsToDisplay ?? $_SESSION['students'];
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +43,7 @@ require_once 'backend.php';
                             </div>
                             
                             <div class="mb-3">
-                                <label class="form-label">Ngành Hoc</label>
+                                <label class="form-label">Ngành Học</label>
                                 <select name="major" class="form-select">
                                     <option value="CNTT" <?php echo (isset($editStudent) && $editStudent['major'] == 'CNTT') ? 'selected' : ''; ?>>CNTT</option>
                                     <option value="Kinh Tế" <?php echo (isset($editStudent) && $editStudent['major'] == 'Kinh Tế') ? 'selected' : ''; ?>>Kinh Tế</option>
@@ -60,10 +65,24 @@ require_once 'backend.php';
 
             <div class="col-md-8">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-dark text-white">
-                        Danh Sách Sinh Viên
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <span>Danh Sách Sinh Viên</span>
                     </div>
+                    
                     <div class="card-body">
+                        <form action="" method="GET" class="mb-3">
+                            <div class="input-group">
+                                <input type="text" name="keyword" class="form-control" 
+                                       placeholder="Tìm kiếm theo tên..." 
+                                       value="<?php echo htmlspecialchars($keyword); ?>">
+                                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                                
+                                <?php if(!empty($keyword)): ?>
+                                    <a href="index.php" class="btn btn-secondary">Hủy</a>
+                                <?php endif; ?>
+                            </div>
+                        </form>
+
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -75,8 +94,8 @@ require_once 'backend.php';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if (!empty($_SESSION['students'])): ?>
-                                    <?php foreach ($_SESSION['students'] as $sv): ?>
+                                <?php if (!empty($studentsToDisplay)): ?>
+                                    <?php foreach ($studentsToDisplay as $sv): ?>
                                         <tr>
                                             <td><?php echo $sv['id']; ?></td>
                                             <td><?php echo $sv['name']; ?></td>
@@ -93,7 +112,9 @@ require_once 'backend.php';
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="5" class="text-center text-muted">Chưa có dữ liệu</td>
+                                        <td colspan="5" class="text-center text-muted">
+                                            <?php echo !empty($keyword) ? 'Không tìm thấy sinh viên nào phù hợp' : 'Chưa có dữ liệu'; ?>
+                                        </td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
