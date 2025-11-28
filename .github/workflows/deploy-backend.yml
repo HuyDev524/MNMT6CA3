@@ -1,28 +1,32 @@
-name: Deploy Backend (BE)
+name: Deploy Backend (BE Only)
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch: # Giữ lại nút bấm tay để tiện test
+    branches: ['main']
+    paths: ['be/**'] # Chỉ chạy khi folder BE thay đổi
+  workflow_dispatch:
 
 jobs:
   deploy-be:
-    name: ⚙️ Deploy Backend
+    name: ⚙️ Deploy BE
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
+    - name: 🚚 Get code
       uses: actions/checkout@v4
     
-    - name: 📂 Sync Backend to InfinityFree
+    - name: 📂 Sync BE to Host
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        
+        # QUAN TRỌNG: Lấy file TỪ folder be
+        local-dir: be/
+        
+        # Đẩy VÀO folder htdocs (nằm chung với FE)
         server-dir: /htdocs/
-        # Chỉ upload backend.php
+        
+        # Không bao giờ upload file .git
         exclude: |
-          index.php
           **/.git*
-          **/.github*
-          README.md
+          **/.git/**
