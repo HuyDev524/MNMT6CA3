@@ -13,7 +13,7 @@ require_once 'backend.php';
 </head>
 <body class="bg-light">
     <div class="container mt-5">
-        <h2 class="text-center mb-4 text-primary">Hệ Thống Quản Lý Sinh Viên (FE & BE Tách Biệt)1</h2>
+        <h2 class="text-center mb-4 text-primary">Hệ Thống Quản Lý Sinh Viên (FE & BE Tách Biệt)2</h2>
 
         <div class="row">
             <div class="col-md-4">
