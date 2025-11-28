@@ -5,7 +5,7 @@ session_start();
 if (!isset($_SESSION['students'])) {
     $_SESSION['students'] = [
         ['id' => 1, 'name' => 'Nguyễn Văn A', 'year' => 2002, 'major' => 'CNTT'],
-        ['id' => 2, 'name' => 'Trần Thị B', 'year' => 2003, 'major' => 'Kinh Tế'],
+        ['id' => 2, 'name' => 'Trần Thị V', 'year' => 2003, 'major' => 'Kinh Tế'],
     ];
 }
 
