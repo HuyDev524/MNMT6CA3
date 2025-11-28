@@ -38,7 +38,7 @@ require_once 'backend.php';
                             </div>
                             
                             <div class="mb-3">
-                                <label class="form-label">Ngành Học</label>
+                                <label class="form-label">Ngành Học11111111111</label>
                                 <select name="major" class="form-select">
                                     <option value="CNTT" <?php echo (isset($editStudent) && $editStudent['major'] == 'CNTT') ? 'selected' : ''; ?>>CNTT</option>
                                     <option value="Kinh Tế" <?php echo (isset($editStudent) && $editStudent['major'] == 'Kinh Tế') ? 'selected' : ''; ?>>Kinh Tế</option>

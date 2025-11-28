@@ -4,7 +4,7 @@ session_start();
 // --- 1. KHỞI TẠO DỮ LIỆU (MOCK DATA) ---
 if (!isset($_SESSION['students'])) {
     $_SESSION['students'] = [
-        ['id' => 1, 'name' => 'Nguyễn Văn A', 'year' => 2002, 'major' => 'CNTT'],
+        ['id' => 1, 'name' => 'Nguyễn Văn A11111111111', 'year' => 2002, 'major' => 'CNTT'],
         ['id' => 2, 'name' => 'Trần Thị B', 'year' => 2003, 'major' => 'Kinh Tế'],
     ];
 }
