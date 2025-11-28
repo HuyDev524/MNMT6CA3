@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$BASE_URL = "http://thanhhuyle.infinityfree.me/index.php";
 // --- 1. KHỞI TẠO DỮ LIỆU (MOCK DATA) ---
 if (!isset($_SESSION['students'])) {
     $_SESSION['students'] = [
