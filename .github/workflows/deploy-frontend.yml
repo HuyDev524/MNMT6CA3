@@ -26,6 +26,7 @@ jobs:
         # Đẩy VÀO folder htdocs
         server-dir: /htdocs/
         
+        delete: "false"
         # Không bao giờ upload file .git
         exclude: |
           **/.git*

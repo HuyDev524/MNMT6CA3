@@ -25,6 +25,8 @@ jobs:
         
         # Đẩy VÀO folder htdocs (nằm chung với FE)
         server-dir: /htdocs/
+
+        delete: "false"
         
         # Không bao giờ upload file .git
         exclude: |
